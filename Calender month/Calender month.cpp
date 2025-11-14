@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 #include <iomanip>
 using namespace std;
@@ -56,59 +56,40 @@ short DayOfWeek(short Day, short Month, short Year)
     return (Day + y + (y / 4) - (y / 100) + (y / 400) + (31 * m) / 12) % 7;
 }
 
-void PrintDaysOfMonth(short Month, short Year)
+void PrintCalenderForm(short Month, short Year)
 {
-    short daysInMonth = NumberOfDaysInMonth(Month, Year);
+    int Current = DayOfWeek(1, Month, Year);
+    int NumberOfDays = NumberOfDaysInMonth(Month, Year);
 
-    short startDay = DayOfWeek(1, Month, Year); 
-    short currentPosition = 0;
+    printf("\n\n  ________________ %s %d _______________\n\n",
+        NameMonth(Month).c_str(), Year);
 
-    
-    for (short i = 0; i < startDay; i++)
+    printf("   Sun   Mon   Tue   Wed   Thu   Fri   Sat\n");
+
+    int i;
+
+    for (i = 0; i < Current; i++)
+        printf("      ");
+
+    for (int day = 1; day <= NumberOfDays; day++)
     {
-        cout << setw(7) << " ";
-        currentPosition++;
+        printf("%6d", day);
+
+        if (++i == 7)
+        {
+            i = 0;
+            printf("\n");
+        }
     }
 
-   for (short day = 1; day <= daysInMonth; day++)
-   {
-        cout << setw(7) << day;
-        currentPosition++;
-
-        if (currentPosition == 7)
-        {
-            cout << "\n";
-            currentPosition = 0;
-        }
-   }
-
-    if (currentPosition != 0)
-        cout << "\n";
-}
-
-void PrintCalenderForm()
-{
-    short Month = ReadMonth();
-    short Year = ReadYear();
-
-    cout << "\n_______________________ " << NameMonth(Month) << " " << Year << " _______________________\n";
-    cout << setw(8) << "Sun"
-        << setw(7) << "Mon"
-        << setw(7) << "Tue"
-        << setw(7) << "Wed"
-        << setw(7) << "Thu"
-        << setw(7) << "Fri"
-        << setw(7) << "Sat"
-        << "\n";
-    cout << "________________________________________________________\n";
-
-    PrintDaysOfMonth(Month, Year);
-
-    cout << "________________________________________________________\n";
+    printf("\n  _________________________________________\n");
 }
 
 int main()
 {
-    PrintCalenderForm();
+    short Year = ReadYear();
+    short Month = ReadMonth();
+    PrintCalenderForm(Month, Year);
     system("pause>0");
+
 }
